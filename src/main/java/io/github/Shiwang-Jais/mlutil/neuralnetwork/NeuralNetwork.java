@@ -1,4 +1,4 @@
-package players.genetic;
+package io.github.shiwangjais.mlutil.NeuralNetwork;
 import java.util.List;
 
 public class NeuralNetwork {

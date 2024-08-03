@@ -1,4 +1,4 @@
-package players.genetic;
+package io.github.shiwangjais.mlutil.matrix;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>io.github.Shiwang-Jais</groupId>
+    <artifactId>mlutil</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>ML Util</name>
+    <url>https://github.com/Shiwang-Jais/mlutil</url>
+
+    <scm>
+        <url>https://github.com/Shiwang-Jais/mlutil</url>
+        <connection>scm:git:git://github.com/shiwang-jais/mlutil.git</connection>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>Shiwang-Jais</id>
+            <name>Shiwang Jais</name>
+            <email>shiwang.romi@gmail.com</email>
+        </developer>
+    </developers>
+</project>
