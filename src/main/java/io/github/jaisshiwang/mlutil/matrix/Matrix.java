@@ -1,9 +1,9 @@
-package io.github.shiwangjais.mlutil.matrix;
+package io.github.jaisshiwang.mlutil.matrix;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class Matrix {
+public class Matrix {
 	double [][]data;
 	int rows;
     int cols;
@@ -67,7 +67,7 @@ class Matrix {
 	}
 	
 	public List<Double> toArray() {
-		List<Double> temp = new ArrayList<Double>();
+		List<Double> temp = new ArrayList<>();
 		for(int i=0; i<rows; i++)
 		{
 			for(int j=0;j<cols;j++)
@@ -79,12 +79,12 @@ class Matrix {
 	}
 
     // From array to matrix of some column length
-    static double[][] transform(double[] arr, int N) {
-        int M = (arr.length + N - 1) / N;
-        double[][] mat = new double[M][];
+    static double[][] transform(double[] arr, int n) {
+        int m = (arr.length + n - 1) / n;
+        double[][] mat = new double[m][];
         int start = 0;
-        for (int r = 0; r < M; r++) {
-            int L = Math.min(N, arr.length - start);
+        for (int r = 0; r < m; r++) {
+            int L = Math.min(n, arr.length - start);
             mat[r] = java.util.Arrays.copyOfRange(arr, start, start + L);
             start += L;
         }
