@@ -1,36 +1,49 @@
 package io.github.jaisshiwang.mlutil.neuralnetwork;
-//------------------------------------------//
-//find a way to import with relative path//
+
 import io.github.jaisshiwang.mlutil.matrix.Matrix;
+import io.github.jaisshiwang.mlutil.matrix.MatrixUtils;
+import io.github.jaisshiwang.mlutil.neuralnetwork.utils.NeuralNetworkUtils;
+
 import java.util.List;
 
+/**
+ * Represents a neural network with multiple layers.
+ */
 public class NeuralNetwork {
-	
-	Matrix weghtsIh;
-    Matrix weghtsHo;
-    Matrix biasH;
-    Matrix biasO;	
-	
-	public NeuralNetwork(Matrix weghtsIh, Matrix weghtsHo, Matrix biasH, Matrix biasO) {
-		// type is a flag to determine if the weights selected are random or given by evolutionary algorithm.
-		this.weghtsIh = weghtsIh;
-		this.weghtsHo = weghtsHo;
-		
-		this.biasH= biasH;
-		this.biasO= biasO;
-	}
 
-	public List<Double> predict(double[] x)
-	{
-		Matrix input = Matrix.fromArray(x);
-		Matrix hidden = Matrix.multiply(weghtsIh, input);
-		hidden.add(biasH);
-		hidden.reLU();
-		
-		Matrix output = Matrix.multiply(weghtsHo,hidden);
-		output.add(biasO);
-		output.reLU();
-		
-		return output.toArray();
-	}
+    private final List<Layer> layers;
+
+    /**
+     * Constructs a NeuralNetwork with the specified layers.
+     *
+     * @param layers The layers of the neural network.
+     */
+    public NeuralNetwork(List<Layer> layers) {
+        this.layers = layers;
+    }
+
+    /**
+     * Performs a forward pass through the network to make a prediction.
+     *
+     * @param input The input data as an array.
+     * @return The output of the network as a list of doubles.
+     */
+    public List<Double> predict(double[] input) {
+        Matrix currentOutput = MatrixUtils.fromArray(input);
+
+        for (Layer layer : layers) {
+            currentOutput = layer.forward(currentOutput);
+        }
+
+        return NeuralNetworkUtils.matrixToList(currentOutput);
+    }
+
+    /**
+     * Adds a layer to the neural network.
+     *
+     * @param layer The layer to add.
+     */
+    public void addLayer(Layer layer) {
+        layers.add(layer);
+    }
 }

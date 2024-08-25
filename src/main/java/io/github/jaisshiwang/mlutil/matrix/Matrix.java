@@ -1,219 +1,132 @@
 package io.github.jaisshiwang.mlutil.matrix;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.github.jaisshiwang.mlutil.matrix.exceptions.MatrixDimensionException;
 
-public class Matrix {
-	double [][]data;
-	int rows;
-    int cols;
-	
-	public Matrix(int rows,int cols) {
-		data= new double[rows][cols];
-		this.rows=rows;
-		this.cols=cols;
+/**
+ * Abstract class representing a matrix.
+ * Provides basic operations that can be performed on matrices.
+ */
+public abstract class Matrix {
+    protected int rows;
+    protected int cols;
 
-        for(int i=0;i<rows;i++)
-        {
-            for(int j=0;j<cols;j++)
-            {
-                data[i][j]=Math.random()*2-1;
-            }
-        }
-	}
-
-	public Matrix(int rows, int cols, double[][] data){
-		this.rows = rows;
-		this.cols = cols;
-		this.data = data;
-	}
-	
-	
-	public void add(int scaler)
-	{
-		for(int i=0;i<rows;i++)
-		{
-			for(int j=0;j<cols;j++)
-			{
-				this.data[i][j]+=scaler;
-			}
-			
-		}
-	}
-	
-	public void add(Matrix m)
-	{
-		if(cols!=m.cols || rows!=m.rows) {
-			return;
-		}
-		
-		for(int i=0;i<rows;i++)
-		{
-			for(int j=0;j<cols;j++)
-			{
-				this.data[i][j]+=m.data[i][j];
-			}
-		}
-	}
-	
-	public static Matrix fromArray(double[]x)
-	{
-		Matrix temp = new Matrix(x.length,1);
-		for(int i =0;i<x.length;i++){
-			temp.data[i][0]=x[i];
-		}
-		return temp;
-		
-	}
-	
-	public List<Double> toArray() {
-		List<Double> temp = new ArrayList<>();
-		for(int i=0; i<rows; i++)
-		{
-			for(int j=0;j<cols;j++)
-			{
-				temp.add(data[i][j]);
-			}
-		}
-		return temp;
-	}
-
-    // From array to matrix of some column length
-    static double[][] transform(double[] arr, int n) {
-        int m = (arr.length + n - 1) / n;
-        double[][] mat = new double[m][];
-        int start = 0;
-        for (int r = 0; r < m; r++) {
-            int L = Math.min(n, arr.length - start);
-            mat[r] = java.util.Arrays.copyOfRange(arr, start, start + L);
-            start += L;
-        }
-        return mat;
+    /**
+     * Constructs a Matrix with the specified number of rows and columns.
+     * 
+     * @param rows Number of rows in the matrix.
+     * @param cols Number of columns in the matrix.
+     */
+    public Matrix(int rows, int cols) {
+        this.rows = rows;
+        this.cols = cols;
     }
 
-	public double[][] listToMatrix(List<Double> arr, int rows, int cols){
-		double[][] result = new double[rows][cols];
-        int i = 0;
-        int j = 0;
-            for (Double value : arr) {
-                result[i][j] = value;
-                j++;
-                if(j > cols - 1){
-                    i++;
-                    j = 0;
-                }
-            }
-        return result;
-	}
-    
+    /**
+     * Returns the number of rows in the matrix.
+     * 
+     * @return Number of rows.
+     */
+    public int getRows() {
+        return rows;
+    }
 
-	public static Matrix subtract(Matrix a, Matrix b) {
-		Matrix temp=new Matrix(a.rows,a.cols);
-		for(int i=0;i<a.rows;i++)
-		{
-			for(int j=0;j<a.cols;j++)
-			{
-				temp.data[i][j]=a.data[i][j]-b.data[i][j];
-			}
-		}
-		return temp;
-	}
+    /**
+     * Returns the number of columns in the matrix.
+     * 
+     * @return Number of columns.
+     */
+    public int getCols() {
+        return cols;
+    }
 
-	public static Matrix transpose(Matrix a) {
-		Matrix temp=new Matrix(a.cols,a.rows);
-		for(int i=0;i<a.rows;i++)
-		{
-			for(int j=0;j<a.cols;j++)
-			{
-				temp.data[j][i]=a.data[i][j];
-			}
-		}
-		return temp;
-	}
+    /**
+     * Gets the value at the specified row and column.
+     * 
+     * @param row The row index.
+     * @param col The column index.
+     * @return The value at the specified position.
+     */
+    public abstract double get(int row, int col);
 
-	public static Matrix multiply(Matrix a, Matrix b) {
-		Matrix temp=new Matrix(a.rows,b.cols);
-		for(int i=0;i<temp.rows;i++)
-		{
-			for(int j=0;j<temp.cols;j++)
-			{
-				double sum=0;
-				for(int k=0;k<a.cols;k++)
-				{
-					sum+=a.data[i][k]*b.data[k][j];
-				}
-				temp.data[i][j]=sum;
-			}
-		}
-		return temp;
-	}
-	
-	public void multiply(Matrix a) {
-		for(int i=0;i<a.rows;i++)
-		{
-			for(int j=0;j<a.cols;j++)
-			{
-				this.data[i][j]*=a.data[i][j];
-			}
-		}
-	}
-	
-	public void multiply(double a) {
-		for(int i=0;i<rows;i++)
-		{
-			for(int j=0;j<cols;j++)
-			{
-				this.data[i][j]*=a;
-			}
-		}
-		
-	}
-	
-	public void sigmoid() {
-		for(int i=0;i<rows;i++)
-		{
-			for(int j=0;j<cols;j++)
-				this.data[i][j] = 1/(1+Math.exp(-this.data[i][j])); 
-		}
-		
-	}
-	
-	public Matrix dsigmoid() {
-		Matrix temp=new Matrix(rows,cols);
-		for(int i=0;i<rows;i++)
-		{
-			for(int j=0;j<cols;j++)
-				temp.data[i][j] = this.data[i][j] * (1-this.data[i][j]);
-		}
-		return temp;	
-	}
+    /**
+     * Sets the value at the specified row and column.
+     * 
+     * @param row The row index.
+     * @param col The column index.
+     * @param value The value to set.
+     */
+    public abstract void set(int row, int col, double value);
 
-	public void reLU(){
-		for(int i=0;i<rows;i++)
-		{
-			for(int j=0;j<cols;j++)
-				if(this.data[i][j] <=0)
-					this.data[i][j] = 0; 
-		}
-	}
+    /**
+     * Adds another matrix to this matrix.
+     * 
+     * @param other The matrix to add.
+     * @return A new matrix representing the sum.
+     * @throws MatrixDimensionException if the dimensions do not match.
+     */
+    public abstract Matrix add(Matrix other);
 
-	public void reduceRows(){
-		Matrix temp = new Matrix((this.rows-1), this.cols);
-		for (int i = 0; i<(this.rows-1); i++){
-			for (int j = 0; j < this.cols; j++){
-				temp.data[i][j] = this.data[i][j];
-			}
-		}
-		this.data = temp.data;
-		this.rows = this.rows-1;
-	}
+    /**
+     * Subtracts another matrix from this matrix.
+     * 
+     * @param other The matrix to subtract.
+     * @return A new matrix representing the difference.
+     * @throws MatrixDimensionException if the dimensions do not match.
+     */
+    public abstract Matrix subtract(Matrix other);
 
-	public Matrix copyMatrix(Matrix m){
-		Matrix temp = new Matrix(m.rows, m.cols);
-		for (int i=0; i<m.rows; i++){
-			for (int j=0; j<m.cols; j++)
-				temp.data[i][j] = m.data[i][j];
-		}
-		return temp;	
-	}
-}	
+    /**
+     * Multiplies this matrix with another matrix.
+     * 
+     * @param other The matrix to multiply with.
+     * @return A new matrix representing the product.
+     * @throws MatrixDimensionException if the dimensions are incompatible.
+     */
+    public abstract Matrix multiply(Matrix other);
+
+    /**
+     * Multiplies this matrix by a scalar.
+     * 
+     * @param scalar The scalar value to multiply by.
+     * @return A new matrix with each element multiplied by the scalar.
+     */
+    public abstract Matrix multiply(double scalar);
+
+    /**
+     * Transposes the matrix.
+     * 
+     * @return A new matrix representing the transpose.
+     */
+    public abstract Matrix transpose();
+
+    /**
+     * Creates a copy of this matrix.
+     * 
+     * @return A new matrix that is a copy of this matrix.
+     */
+    public abstract Matrix copy();
+
+    /**
+     * Validates that the dimensions of this matrix match another matrix.
+     * 
+     * @param other The matrix to compare dimensions with.
+     * @throws MatrixDimensionException if the dimensions do not match.
+     */
+    protected void validateDimensions(Matrix other) {
+        if (this.rows != other.rows || this.cols != other.cols) {
+            throw new MatrixDimensionException("Matrix dimensions must match.");
+        }
+    }
+
+    /**
+     * Validates that the dimensions of this matrix are compatible with another matrix for multiplication.
+     * 
+     * @param other The matrix to compare dimensions with.
+     * @throws MatrixDimensionException if the dimensions are incompatible.
+     */
+    protected void validateMultiplication(Matrix other) {
+        if (this.cols != other.rows) {
+            throw new MatrixDimensionException("Matrix dimensions must be compatible for multiplication.");
+        }
+    }
+}

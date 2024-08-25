@@ -4,8 +4,29 @@ ML Util is a Java package for machine learning utilities, including matrix opera
 
 ## Package Structure
 
-- `io.github.shiwangjais.mlutil.matrix`: Contains the `Matrix` class for matrix operations.
-- `io.github.shiwangjais.mlutil.neuralnetwork`: Contains the `NeuralNetwork` class for neural network operations.
+io.github.jaisshiwang.mlutil.matrix
+├── Matrix.java
+├── DenseMatrix.java
+├── SparseMatrix.java
+├── MatrixOperations.java
+├── MatrixDecomposition.java
+├── MatrixUtils.java
+├── exceptions
+│   ├── MatrixDimensionException.java
+│   └── SingularMatrixException.java
+└── decomposition
+    ├── LUDecomposition.java
+    ├── QRDecomposition.java
+    └── CholeskyDecomposition.java
+    
+io.github.jaisshiwang.mlutil.neuralnetwork
+├── NeuralNetwork.java
+├── Layer.java
+└── utils
+    ├── ActivationFunction.java
+    ├── ActivationFunctions.java
+    └── NeuralNetworkUtils.java
+    
 
 ## Usage
 
