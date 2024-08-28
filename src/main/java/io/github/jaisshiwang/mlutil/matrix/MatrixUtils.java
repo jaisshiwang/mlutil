@@ -107,4 +107,29 @@ public class MatrixUtils {
         }
         return result;
     }
+
+     /**
+     * Converts a list of Doubles to a Matrix of specified type.
+     *
+     * @param list The list of Doubles.
+     * @param rows The number of rows for the resulting matrix.
+     * @param cols The number of columns for the resulting matrix.
+     * @param matrixClass The class type of the matrix to return (e.g., DenseMatrix.class).
+     * @param <T> The type of matrix.
+     * @return A matrix of type T representing the list elements.
+     */
+    public static <T extends Matrix> T listToMatrix(List<Double> list, int rows, int cols, Class<T> matrixClass) {
+        double[][] data = new double[rows][cols];
+        int index = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                data[i][j] = list.get(index++);
+            }
+        }
+        try {
+            return matrixClass.getDeclaredConstructor(int.class, int.class, double[][].class).newInstance(rows, cols, data);
+        } catch (Exception e) {
+            throw new RuntimeException("Error creating matrix instance", e);
+        }
+    }
 }

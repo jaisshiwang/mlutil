@@ -2,6 +2,7 @@ package io.github.jaisshiwang.mlutil.neuralnetwork.utils;
 
 import io.github.jaisshiwang.mlutil.matrix.DenseMatrix;
 import io.github.jaisshiwang.mlutil.matrix.Matrix;
+import io.github.jaisshiwang.mlutil.matrix.MatrixUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,22 +29,15 @@ public class NeuralNetworkUtils {
     }
 
     /**
-     * Converts a list of Doubles to a DenseMatrix.
+     * Converts a list of Doubles to a Matrix.
      *
      * @param list The list of Doubles.
      * @param rows The number of rows for the resulting matrix.
      * @param cols The number of columns for the resulting matrix.
-     * @return A DenseMatrix representing the list elements.
+     * @return A matrix representing the list elements.
      */
     public static Matrix listToMatrix(List<Double> list, int rows, int cols) {
-        double[][] data = new double[rows][cols];
-        int index = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                data[i][j] = list.get(index++);
-            }
-        }
-        return new DenseMatrix(rows, cols, data);
+        return MatrixUtils.listToMatrix(list, rows, cols, Matrix.class);  // Default to Matrix class
     }
 }
 
