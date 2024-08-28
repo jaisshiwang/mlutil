@@ -1,7 +1,7 @@
 package io.github.jaisshiwang.mlutil.neuralnetwork;
 
+import io.github.jaisshiwang.mlutil.matrix.DenseMatrix;
 import io.github.jaisshiwang.mlutil.matrix.Matrix;
-import io.github.jaisshiwang.mlutil.matrix.MatrixUtils;
 import io.github.jaisshiwang.mlutil.neuralnetwork.utils.NeuralNetworkUtils;
 
 import java.util.List;
@@ -29,7 +29,8 @@ public class NeuralNetwork {
      * @return The output of the network as a list of doubles.
      */
     public List<Double> predict(double[] input) {
-        Matrix currentOutput = MatrixUtils.fromArray(input);
+        // Use DenseMatrix.fromArray instead of MatrixUtils.fromArray
+        Matrix currentOutput = DenseMatrix.fromArray(input);
 
         for (Layer layer : layers) {
             currentOutput = layer.forward(currentOutput);
@@ -47,3 +48,4 @@ public class NeuralNetwork {
         layers.add(layer);
     }
 }
+

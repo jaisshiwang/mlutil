@@ -8,16 +8,6 @@ import java.util.List;
 public class MatrixUtils {
 
     /**
-     * Creates a matrix from a 1D array.
-     * 
-     * @param array The 1D array.
-     * @return A column matrix representing the array.
-     */
-    public static Matrix fromArray(double[] array) {
-        return new DenseMatrix(array.length, 1, new double[][]{array});
-    }
-
-    /**
      * Converts a matrix to a 1D array.
      * 
      * @param matrix The matrix.

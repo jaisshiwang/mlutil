@@ -38,6 +38,17 @@ public class SparseMatrix extends Matrix {
     }
 
     @Override
+    public double[] getRow(int row) {
+        double[] result = new double[cols];
+        if (data.containsKey(row)) {
+            for (Map.Entry<Integer, Double> entry : data.get(row).entrySet()) {
+                result[entry.getKey()] = entry.getValue();
+            }
+        }
+        return result;
+    }
+
+    @Override
     public Matrix add(Matrix other) {
         validateDimensions(other);
         SparseMatrix result = new SparseMatrix(rows, cols);

@@ -21,6 +21,14 @@ public abstract class Matrix {
         this.cols = cols;
     }
 
+	/**
+     * Retrieves a row from the matrix as an array.
+     *
+     * @param row The index of the row to retrieve.
+     * @return An array containing the values in the specified row.
+     */
+    public abstract double[] getRow(int row);
+	
     /**
      * Returns the number of rows in the matrix.
      * 

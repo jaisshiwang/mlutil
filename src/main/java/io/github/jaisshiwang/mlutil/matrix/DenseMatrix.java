@@ -50,6 +50,11 @@ public class DenseMatrix extends Matrix {
     }
 
     @Override
+    public double[] getRow(int row) {
+        return data[row];
+    }
+
+    @Override
     public Matrix add(Matrix other) {
         validateDimensions(other);
         DenseMatrix result = new DenseMatrix(rows, cols);
@@ -119,4 +124,13 @@ public class DenseMatrix extends Matrix {
         }
         return new DenseMatrix(rows, cols, copiedData);
     }
+
+    public static DenseMatrix fromArray(double[] array) {
+        double[][] data = new double[array.length][1];
+        for (int i = 0; i < array.length; i++) {
+            data[i][0] = array[i];
+        }
+        return new DenseMatrix(array.length, 1, data);
+    }
+    
 }
