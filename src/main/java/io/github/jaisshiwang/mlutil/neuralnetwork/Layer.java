@@ -32,10 +32,14 @@ public class Layer {
      * @return The output of the layer.
      */
     public Matrix forward(Matrix input) {
+        if (input.getRows() != weights.getCols()) {
+            throw new IllegalArgumentException("Input dimensions do not match the weight matrix dimensions.");
+        }
         Matrix output = weights.multiply(input);
         output.add(biases);
         output = activationFunction.apply(output);
         return output;
     }
+    
 }
 
