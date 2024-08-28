@@ -75,9 +75,17 @@ public class MatrixUtils {
      * @param cols Number of columns.
      * @return A new matrix with random values.
      */
-    public static Matrix randomMatrix(int rows, int cols) {
-        return new DenseMatrix(rows, cols);
+    public static Matrix randomMatrix(int rows, int cols, double minValue, double maxValue) {
+        DenseMatrix matrix = new DenseMatrix(rows, cols);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                double randomValue = minValue + Math.random() * (maxValue - minValue);
+                matrix.set(i, j, randomValue);
+            }
+        }
+        return matrix;
     }
+    
 
     /**
      * Reduces a matrix by removing rows to match the specified new row count.

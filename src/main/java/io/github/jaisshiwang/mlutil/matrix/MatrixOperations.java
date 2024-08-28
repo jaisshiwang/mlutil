@@ -1,6 +1,7 @@
 package io.github.jaisshiwang.mlutil.matrix;
 
 import io.github.jaisshiwang.mlutil.matrix.exceptions.MatrixDimensionException;
+import io.github.jaisshiwang.mlutil.neuralnetwork.utils.ActivationFunction;
 
 /**
  * Utility class for common matrix operations such as addition, subtraction, multiplication, and more.
@@ -112,4 +113,9 @@ public class MatrixOperations {
         }
         return result;
     }
+
+    public static Matrix applyActivationFunction(Matrix a, ActivationFunction activationFunction) {
+        return activationFunction.apply(a);
+    }
+
 }
