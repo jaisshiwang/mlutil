@@ -17,7 +17,7 @@ public class LUDecomposition {
 
     /**
      * Constructs an LUDecomposition of the given square matrix.
-     * 
+     *
      * @param matrix The square matrix to decompose.
      * @throws IllegalArgumentException if the matrix is not square.
      * @throws SingularMatrixException if the matrix is singular.
@@ -33,10 +33,25 @@ public class LUDecomposition {
         P = MatrixUtils.identity(n);
 
         for (int i = 0; i < n; i++) {
+            // Partial Pivoting: Find the row with the largest pivot element
+            int maxRow = i;
+            for (int k = i + 1; k < n; k++) {
+                if (Math.abs(U.get(k, i)) > Math.abs(U.get(maxRow, i))) {
+                    maxRow = k;
+                }
+            }
+
+            // Swap rows in U and P
+            if (maxRow != i) {
+                U.swapRows(i, maxRow);
+                P.swapRows(i, maxRow);
+            }
+
             double pivotValue = U.get(i, i);
             if (pivotValue == 0) {
                 throw new SingularMatrixException("Matrix is singular and cannot be decomposed.");
             }
+
             for (int j = i + 1; j < n; j++) {
                 double multiplier = U.get(j, i) / pivotValue;
                 L.set(j, i, multiplier);
@@ -53,7 +68,7 @@ public class LUDecomposition {
 
     /**
      * Returns the lower triangular matrix from the LU decomposition.
-     * 
+     *
      * @return The lower triangular matrix L.
      */
     public Matrix getL() {
@@ -62,7 +77,7 @@ public class LUDecomposition {
 
     /**
      * Returns the upper triangular matrix from the LU decomposition.
-     * 
+     *
      * @return The upper triangular matrix U.
      */
     public Matrix getU() {
@@ -71,11 +86,12 @@ public class LUDecomposition {
 
     /**
      * Returns the permutation matrix from the LU decomposition.
-     * 
+     *
      * @return The permutation matrix P.
      */
     public Matrix getP() {
         return P;
     }
 }
+
 

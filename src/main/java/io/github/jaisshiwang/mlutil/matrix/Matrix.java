@@ -28,7 +28,7 @@ public abstract class Matrix {
      * @return An array containing the values in the specified row.
      */
     public abstract double[] getRow(int row);
-	
+
     /**
      * Returns the number of rows in the matrix.
      * 
@@ -113,6 +113,15 @@ public abstract class Matrix {
      * @return A new matrix that is a copy of this matrix.
      */
     public abstract Matrix copy();
+
+	/**
+     * Swaps two rows in the matrix.
+     *
+     * @param row1 The first row index.
+     * @param row2 The second row index.
+     * @throws IllegalArgumentException if the row indices are out of bounds.
+     */
+    public abstract void swapRows(int row1, int row2);
 
     /**
      * Validates that the dimensions of this matrix match another matrix.

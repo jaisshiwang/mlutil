@@ -135,5 +135,26 @@ public class SparseMatrix extends Matrix {
         }
         return result;
     }
+
+    /**
+     * Swaps two rows in the sparse matrix.
+     * If a row has no non-zero elements, it remains empty after the swap.
+     *
+     * @param row1 The first row index.
+     * @param row2 The second row index.
+     * @throws IllegalArgumentException if the row indices are out of bounds.
+     */
+    @Override
+    public void swapRows(int row1, int row2) {
+        if (row1 < 0 || row1 >= rows || row2 < 0 || row2 >= rows) {
+            throw new IllegalArgumentException("Row index out of bounds.");
+        }
+
+        if (row1 == row2) return;
+
+        Map<Integer, Double> temp = data.get(row1);
+        data.put(row1, data.get(row2));
+        data.put(row2, temp);
+    }
 }
 

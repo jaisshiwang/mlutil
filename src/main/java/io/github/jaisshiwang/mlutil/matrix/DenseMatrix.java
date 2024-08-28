@@ -132,5 +132,21 @@ public class DenseMatrix extends Matrix {
         }
         return new DenseMatrix(array.length, 1, data);
     }
-    
+
+    /**
+     * Swaps two rows in the matrix.
+     *
+     * @param row1 The first row index.
+     * @param row2 The second row index.
+     * @throws IllegalArgumentException if the row indices are out of bounds.
+     */
+    @Override
+    public void swapRows(int row1, int row2) {
+        if (row1 < 0 || row1 >= rows || row2 < 0 || row2 >= rows) {
+            throw new IllegalArgumentException("Row index out of bounds.");
+        }
+        double[] temp = data[row1];
+        data[row1] = data[row2];
+        data[row2] = temp;
+    }
 }
