@@ -33,7 +33,9 @@ public class MatrixUtils {
     public static Matrix identity(int size) {
         DenseMatrix identity = new DenseMatrix(size, size);
         for (int i = 0; i < size; i++) {
-            identity.set(i, i, 1.0);
+            for (int j = 0; j < size; j++) {
+                identity.set(i, j, (i == j) ? 1.0 : 0.0);
+            }
         }
         return identity;
     }
